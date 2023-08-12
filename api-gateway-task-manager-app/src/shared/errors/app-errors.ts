@@ -10,7 +10,8 @@ export class AppError extends Error {
   }
 
   public getResponse() {
-    const message = JSON.parse(this.message);
+    const message =
+      this.statusCode == 422 ? JSON.parse(this.message) : this.message;
     return {
       message: message,
       statusCode: this.statusCode,

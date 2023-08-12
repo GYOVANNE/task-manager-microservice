@@ -11,8 +11,10 @@ const envSchema = z.object({
     .string()
     .default('http://auth-service-task-manager-app-nginx'),
   AUTH_MICROSERVICE_PORT: z.coerce.number().default(80),
-  TASK_MICROSERVICE_HOST: z.string().default('task-service-task-manager-app'),
-  TASK_MICROSERVICE_PORT: z.coerce.number().default(5001),
+  TASK_MICROSERVICE_HOST: z
+    .string()
+    .default('http://task-service-task-manager-app'),
+  TASK_MICROSERVICE_PORT: z.coerce.number().default(4001),
   RATE_LIMIT_TTL: z.coerce.number().default(60),
   RATE_LIMIT_LIMIT: z.coerce.number().default(30),
   REDIS_URL: z.string(),

@@ -22,6 +22,12 @@ export class HealthCheckController {
   async healthCheck() {
     return zip(
       this.authMicroservice.healthCheck().then(this.sucess).catch(this.error),
-    ).pipe(map(([authMicroservice]) => ({ authMicroservice })));
+      this.taskMicroservice.healthCheck().then(this.sucess).catch(this.error),
+    ).pipe(
+      map(([authMicroservice, taskMicroservice]) => ({
+        authMicroservice,
+        taskMicroservice,
+      })),
+    );
   }
 }

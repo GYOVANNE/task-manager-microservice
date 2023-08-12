@@ -2,6 +2,7 @@ import { env } from 'env';
 
 export enum ClientEnum {
   AUTH = 'AUTH',
+  TASK = 'TASK',
 }
 
 function concatUrl(host: string, port: number, extra?: string): string {
@@ -15,5 +16,6 @@ export function getBaseUrl(client: ClientEnum): string {
       env.AUTH_MICROSERVICE_PORT,
       'v1/api',
     ),
+    TASK: concatUrl(env.TASK_MICROSERVICE_HOST, env.TASK_MICROSERVICE_PORT),
   }[client];
 }
