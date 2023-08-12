@@ -1,4 +1,4 @@
-package br.com.taskmanager.Controllers;
+package br.com.taskmanager.Controllers.Task;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/health-check")
 public class HealthCheckController {
 
     /**
@@ -17,6 +17,6 @@ public class HealthCheckController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public String index() {
-        return "Pongs";
+        return "ok";
     }
 }

@@ -1,13 +1,13 @@
-version: '3'
+version: "3"
 services:
   postgres:
     container_name: task-service-task-manager-app-db
     image: postgres:13
     restart: always
     environment:
-      POSTGRES_DB: mydb
-      POSTGRES_USER: mydb
-      POSTGRES_PASSWORD: mydb
+      POSTGRES_DB: taskservice
+      POSTGRES_USER: taskservice
+      POSTGRES_PASSWORD: taskservice
     ports:
       - "65432:5432"
     networks:
@@ -22,6 +22,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4001:4001"
+      - "5005:5005"
+    environment:
+      - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+      - PROFILE=dev
     depends_on:
       - postgres
     networks:
@@ -30,5 +34,5 @@ services:
 volumes:
   task-service-task-manager-app-db-data:
 networks:
- task_manager_net:
+  task_manager_net:
     driver: bridge
