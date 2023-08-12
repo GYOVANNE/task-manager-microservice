@@ -1,0 +1,54 @@
+version: "3.5"
+services:
+    auth-service-task-manager-app:
+        container_name: auth-service-task-manager-app
+        environment:
+            - COMPOSER_MEMORY_LIMIT=-1
+        image: bitnami/php-fpm:8.1
+        networks:
+            - task_manager_net
+        restart: unless-stopped
+        volumes:
+            - ./:/var/www/auth-service-task-manager-app
+            - ./docker-compose/php-fpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+        working_dir: /var/www/auth-service-task-manager-app
+        depends_on:
+            - "db"
+    db:
+        command: --default-authentication-plugin=mysql_native_password --explicit_defaults_for_timestamp --max_connections=256
+        container_name: auth-service-task-manager-mysql
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_NAME: mysql
+            SERVICE_TAGS: dev
+        image: mysql:5.7-oracle
+        networks:
+            - task_manager_net
+        ports:
+            - ${DB_PORT}:${DB_PORT}
+        restart: unless-stopped
+        tty: true
+        volumes:
+            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+            - auth-service-task-manager-mysql:/var/lib/mysql
+    nginx:
+        container_name: auth-service-task-manager-app-nginx
+        image: nginx:alpine
+        networks:
+            - task_manager_net
+        ports:
+            - ${APP_PORT}:80
+        restart: unless-stopped
+        volumes:
+            - ./:/var/www/auth-service-task-manager-app
+            - ./docker-compose/nginx:/etc/nginx/conf.d/
+        working_dir: /var/www/auth-service-task-manager-app
+
+volumes:
+    auth-service-task-manager-mysql:
+networks:
+    task_manager_net:
+        driver: bridge

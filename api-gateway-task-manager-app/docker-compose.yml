@@ -1,0 +1,40 @@
+version: '3.5'
+services:
+  api-gateway-task-manager-app:
+    container_name: api-gateway-task-manager-app
+    image: node:18
+    environment:
+      NODE_ENV: "${NODE_ENV}"
+      NODE_OPTIONS: '--max_old_space_size=2048'
+      TZ: "${APP_TIMEZONE}"
+    env_file:
+      - .env
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    expose:
+      - "${APP_PORT}"
+    command: [ "chmod", "+x", "./entrypoint.sh" ]
+    entrypoint: [ "./entrypoint.sh" ]
+    networks:
+      - task_manager_net
+  api-gateway-task-manager-cache:
+      image: 'redis:6.2.6-alpine'
+      restart: always
+      env_file:
+        - .env
+      ports:
+      - '${REDIS_PORT}:6379'
+      command: redis-server --save --requirepass ${REDIS_PASSWORD}
+      volumes:
+      - ./api-gateway-task-manager-cache/data:/data
+      networks:
+        - task_manager_net
+volumes:
+  api-gateway-task-manager-cache:
+    driver: local
+networks:
+  task_manager_net:
+    driver: bridge

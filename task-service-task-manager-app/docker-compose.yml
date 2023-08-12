@@ -1,0 +1,34 @@
+version: '3'
+services:
+  postgres:
+    container_name: task-service-task-manager-app-db
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: mydb
+      POSTGRES_PASSWORD: mydb
+    ports:
+      - "65432:5432"
+    networks:
+      - task_manager_net
+    volumes:
+      - task-service-task-manager-app-db-data:/var/lib/postgresql/data
+  task-service-task-manager-app:
+    image: task-service-task-manager-app
+    container_name: task-service-task-manager-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4001"
+    depends_on:
+      - postgres
+    networks:
+      - task_manager_net
+    restart: always
+volumes:
+  task-service-task-manager-app-db-data:
+networks:
+ task_manager_net:
+    driver: bridge

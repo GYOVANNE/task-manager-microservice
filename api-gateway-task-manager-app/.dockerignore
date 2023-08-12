@@ -1,0 +1,11 @@
+git
+.cache/
+dist/
+node_modules/
+
+.dockerignore
+.env*
+.gitignore
+Dockerfile
+LICENSE
+*.md
