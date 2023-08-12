@@ -2,22 +2,14 @@
 
 NETWORK_NAME="task_manager_net"
 API_GATEWAY_CONTAINER="api-gateway-task-manager-app"
-AUTH_SERVICE_NGINX_CONTAINER="api-gateway-task-manager-app-nginx"
+AUTH_SERVICE_NGINX_CONTAINER="auth-service-task-manager-app-nginx"
 
 services=(
   "auth-service-task-manager-app"
+  "task-service-task-manager-app"
 )
 
 if [ "$1" == "up" ]; then
-
-	for service in "${services[@]}"
-	do
-		if [ ! -f "${service}/.env" ]; then
-		echo "Arquivo .env não encontrado para o serviço ${service}. Copiando o arquivo .env.example..."
-		cp "${service}/.env.example" "${service}/.env"
-		echo "Arquivo .env copiado para o serviço ${service}."
-		fi
-	done
 
 	if [ ! "$(docker network ls -q -f name=${NETWORK_NAME})" ]; then
 		docker network create ${NETWORK_NAME}
