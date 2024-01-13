@@ -28,7 +28,7 @@ services:
         networks:
             - task_manager_net
         ports:
-            - ${DB_PORT}:${DB_PORT}
+            - ${DB_PORT_CONTAINER}:3306
         restart: unless-stopped
         tty: true
         volumes:

@@ -1,16 +1,22 @@
 package br.com.taskmanager.Controllers.Task;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.taskmanager.Services.Task.TaskService;
 import br.com.taskmanager.Util.ResponseSuccess;
 import br.com.taskmanager.domains.Task.DTO.CreateTaskRequestDTO;
 import br.com.taskmanager.domains.Task.DTO.TaskDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.transaction.Transactional;
-import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -21,6 +27,7 @@ public class TaskController {
 
     /**
      * List all tasks
+     * 
      * @return List<Task>
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -30,6 +37,7 @@ public class TaskController {
 
     /**
      * Get one task
+     * 
      * @return List<Task>
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -40,7 +48,7 @@ public class TaskController {
     /**
      * Create one task
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<ResponseSuccess> create(@RequestBody CreateTaskRequestDTO request) {
         System.out.println(request);
@@ -53,7 +61,7 @@ public class TaskController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @Transactional
     public ResponseEntity<ResponseSuccess> update(@PathVariable Long id, @RequestBody CreateTaskRequestDTO request) {
-        return this.service.update(id,request);
+        return this.service.update(id, request);
     }
 
     /**
