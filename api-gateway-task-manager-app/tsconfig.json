@@ -11,9 +11,15 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
-      "@shared/*": ["./shared/*"],
-      "@domain/*": ["./domain/*"],
-      "@config/*": ["./configs/*"]
+      "@shared/*": [
+        "./shared/*"
+      ],
+      "@domain/*": [
+        "./domain/*"
+      ],
+      "@config/*": [
+        "./configs/*"
+      ]
     },
     "incremental": true,
     "skipLibCheck": true,

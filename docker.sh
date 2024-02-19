@@ -5,8 +5,8 @@ API_GATEWAY_CONTAINER="api-gateway-task-manager-app"
 AUTH_SERVICE_NGINX_CONTAINER="auth-service-task-manager-app-nginx"
 
 services=(
-  "auth-service-task-manager-app"
-  "task-service-task-manager-app"
+#   "auth-service-task-manager-app"
+#   "task-service-task-manager-app"
 )
 
 if [ "$1" == "up" ]; then

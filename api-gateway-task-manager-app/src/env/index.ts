@@ -17,6 +17,7 @@ const envSchema = z.object({
   TASK_MICROSERVICE_PORT: z.coerce.number().default(4001),
   RATE_LIMIT_TTL: z.coerce.number().default(60),
   RATE_LIMIT_LIMIT: z.coerce.number().default(30),
+  TASK_MANAGER_QUEUE_URL: z.string().default('amqp://api-gateway-task-manager-queue:5673'),
   REDIS_URL: z.string(),
 });
 

@@ -21,18 +21,29 @@ services:
     networks:
       - task_manager_net
   api-gateway-task-manager-cache:
-      image: 'redis:6.2.6-alpine'
-      restart: always
-      env_file:
-        - .env
-      ports:
+    image: 'redis:6.2.6-alpine'
+    restart: always
+    env_file:
+      - .env
+    ports:
       - '${REDIS_PORT}:6379'
-      command: redis-server --save --requirepass ${REDIS_PASSWORD}
-      volumes:
+    command: redis-server --save --requirepass ${REDIS_PASSWORD}
+    volumes:
       - ./api-gateway-task-manager-cache/data:/data
-      networks:
-        - task_manager_net
+    networks:
+      - task_manager_net
+  api-gateway-task-manager-queue:
+    image: rabbitmq:3-management
+    container_name: api-gateway-task-manager-queue
+    ports:
+      - '${RABBITMQ_PORT}:${RABBITMQ_PORT}'
+      - '${RABBITMQ_PORT_ADMIN}:${RABBITMQ_PORT_ADMIN}'
+    volumes:
+      - rabbitmq_data:/var/lib/api-gateway-task-manager-queue
+    networks:
+      - task_manager_net
 volumes:
+  rabbitmq_data:
   api-gateway-task-manager-cache:
     driver: local
 networks:

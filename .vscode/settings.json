@@ -9,5 +9,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "java.compile.nullAnalysis.mode": "disabled"
 }

@@ -16,7 +16,7 @@ import {
 
 @Injectable()
 export class CircuitBreakerService {
-  private readonly MAX_RETRIES = 5; // retry 6 times
+  private readonly MAX_RETRIES = 3; // retry 3 times
   private readonly RETRY_DELAY_MS = 1000;
 
   constructor(private httpService: HttpService) {}
@@ -57,7 +57,7 @@ export class CircuitBreakerService {
           error.response.status,
         );
       }),
-      take(this.MAX_RETRIES + 1),
+      take(this.MAX_RETRIES),
       map((message) => ({ response: message.data })),
     );
   }
