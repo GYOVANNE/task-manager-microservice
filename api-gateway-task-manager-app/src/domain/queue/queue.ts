@@ -6,10 +6,9 @@ import {
   Transport,
 } from '@nestjs/microservices';
 
-
 export type QueuePayload = {
   client: string;
-  pattern: { cmd: string; pass: string };
+  pattern: string;
   payload?: any;
 };
 

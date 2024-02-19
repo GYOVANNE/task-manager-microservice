@@ -9,4 +9,4 @@ import { QueueService } from './queue.service';
   providers: [QueueService, ClientsRMQProxy],
   exports: [QueueService],
 })
-export class WintQueueModule {}
+export class QueueModule {}
